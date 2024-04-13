@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model USERS_CREDENTIAL {
+  ID       Int    @id @default(autoincrement())  
+  USERNAME Int   @unique
+  EMAIL    String? @db.VarChar(100)
+  NAME     String
+  PASSWORD String @db.VarChar(100)
+  USERTYPE String @db.Char(1)
+  emailVerified DateTime?
+  image         String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  Session       Session[]
+  Account       Account?
+  Authenticator Authenticator[]
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   Int  @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     USERS_CREDENTIAL?   @relation(fields: [userId], references: [ID])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         USERS_CREDENTIAL     @relation(fields: [userId], references: [ID])
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  @@index([userId])
+}
+ 
+model VerificationToken {
+  identifier String @id
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  id                   String  @id @default(cuid())
+  credentialID         String  @unique
+  userId               Int
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user USERS_CREDENTIAL @relation(fields: [userId], references: [ID], onDelete: Cascade)
+}
