@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import Link from "next/link";
 import React, { useState } from "react";
@@ -12,13 +12,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+// import { authOptions } from '@app/api/auth/[...nextauth]/route';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-const Navbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+const Navbar = async () => {
+  // const [showDropdown, setShowDropdown] = useState(false);
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+  // const toggleDropdown = () => {
+  //   setShowDropdown(!showDropdown);
+  // };
+  const session = await getServerSession(authOptions);
   return (
     <div>
       {" "}
@@ -27,10 +31,7 @@ const Navbar = () => {
           <div className="block lg:hidden">
             {/* Mobile dropdown */}
             <Sheet>
-              <SheetTrigger
-                className="text-xl focus:outline-none"
-                onClick={toggleDropdown}
-              >
+              <SheetTrigger className="text-xl focus:outline-none">
                 {" "}
                 &#9776;
               </SheetTrigger>
@@ -56,19 +57,43 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
           </div>
+          {/* desktop navbar */}
+
           <div className="hidden lg:flex items-center">
-            <Link href="/" className="font-bold text-xl">
-              Dashboard
-            </Link>
-            <Link href="/students" className="ml-4">
-              Students
-            </Link>
-            <Link href="/classes" className="ml-4">
-              Classes
-            </Link>
-            <Link href="/fees" className="ml-4">
-              Fees
-            </Link>
+            {session && session.user?.email ? (
+              <>
+                <Link href="/protected/dashboard" className="font-bold text-xl">
+                  Dashboard
+                </Link>
+                <Link href="/protected/students" className="ml-4">
+                  Students
+                </Link>
+                <Link href="/extra" className="ml-4">
+                  Students
+                </Link>
+                <Link href="/protected/classes" className="ml-4">
+                  Classes
+                </Link>
+                <Link href="/protected/fees" className="ml-4">
+                  Fees
+                </Link>
+                <Link href="/auth/signout" className="ml-4">
+                  Sign out
+                </Link>
+                <p className="ml-4">
+                  <b>Signed in as {session.user?.email}</b>
+                </p>
+              </>
+            ) : (
+              <>
+                <Link href="/auth/signIn" className="ml-4">
+                  Sign in
+                </Link>
+                <Link href="/auth/signup " className="ml-4">
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

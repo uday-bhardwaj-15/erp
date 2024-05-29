@@ -1,4 +1,4 @@
-import Login from "@/components/login";
+// import Login from "@/components/login";
 import React from "react";
 import { Payment, columns } from "./ui/payments/columns";
 import { DataTable } from "./ui/payments/data-table";
@@ -38,6 +38,7 @@ async function getData(): Promise<Payment[]> {
   ];
 }
 const page = async () => {
+  // console.log("called");
   const data = await getData();
   return (
     <div>
