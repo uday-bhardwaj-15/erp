@@ -15,6 +15,7 @@ import {
 // import { authOptions } from '@app/api/auth/[...nextauth]/route';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Role } from "@prisma/client";
 
 const Navbar = async () => {
   // const [showDropdown, setShowDropdown] = useState(false);
@@ -22,7 +23,9 @@ const Navbar = async () => {
   // const toggleDropdown = () => {
   //   setShowDropdown(!showDropdown);
   // };
+
   const session = await getServerSession(authOptions);
+  const isTeacher = session?.user?.role === Role.TEACHER;
   return (
     <div>
       {" "}
@@ -65,18 +68,22 @@ const Navbar = async () => {
                 <Link href="/protected/dashboard" className="font-bold text-xl">
                   Dashboard
                 </Link>
-                <Link href="/protected/students" className="ml-4">
-                  Students
-                </Link>
-                <Link href="/extra" className="ml-4">
-                  Students
-                </Link>
-                <Link href="/protected/classes" className="ml-4">
-                  Classes
-                </Link>
-                <Link href="/protected/fees" className="ml-4">
-                  Fees
-                </Link>
+                {isTeacher && (
+                  <>
+                    <Link href="/protected/students" className="ml-4">
+                      Students
+                    </Link>
+                    <Link href="/extra" className="ml-4">
+                      Students
+                    </Link>
+                    <Link href="/protected/classes" className="ml-4">
+                      Classes
+                    </Link>
+                    <Link href="/protected/fees" className="ml-4">
+                      Fees
+                    </Link>
+                  </>
+                )}
                 <Link href="/auth/signout" className="ml-4">
                   Sign out
                 </Link>

@@ -23,6 +23,7 @@ const SignInForm = () => {
         username,
         password,
         email: username,
+
         redirect: false,
       });
       console.log(signInResponse);

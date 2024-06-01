@@ -7,6 +7,7 @@ import NextAuth, { getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { AuthOptions } from "next-auth";
 import { Role } from "@prisma/client";
+import Email from "next-auth/providers/email";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -36,28 +37,32 @@ export const authOptions: AuthOptions = {
             username,
           },
         });
-        console.log(user);
+        console.log("uday", user);
         if (!user) {
           return null;
         }
 
         const userPassword = user.password;
 
-        // const isValidPassword = bcrypt.compareSync(password, userPassword);
-        if (password == userPassword) {
-          console.log("hello");
-        }
-        console.log({ password });
-        // if (!isValidPassword) {
-        //   return null;
-        // }
+        const isValidPassword = bcrypt.compareSync(password, userPassword);
 
-        return user;
+        console.log({ password });
+        if (!isValidPassword) {
+          return null;
+        }
+
+        return {
+          id: user.id.toString(),
+          name: user.name,
+          email: user.email,
+          image: user.image, // Assuming the user has an image field
+          role: user.role || "STUDENT", // Default role if not provided
+        };
       },
     }),
   ],
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/signIn",
     signOut: "/auth/signout",
   },
   secret: process.env.NEXTAUTH_SECRET,
@@ -85,32 +90,27 @@ export const authOptions: AuthOptions = {
     maxAge: 30 * 24 * 60 * 60,
     updateAge: 24 * 60 * 60,
   },
+
   callbacks: {
-    async session(params: { session: Session; token: JWT; user: User }) {
-      if (params.session.user) {
-        params.session.user.email = params.token.email;
-        // params.session.user.role = params.token.role;
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+        token.email = user.email;
+        token.name = user.name;
+        token.image = user.image; // Add image to the token
       }
-      if (params.token) {
-        params.session.user.email = params.token.email;
-        // params.session.user.role = params.token.role;
-      }
-
-      return params.session;
+      return token;
     },
-    async jwt(params: {
-      token: JWT;
-      user?: User | undefined;
-      account?: Account | null | undefined;
-      profile?: Profile | undefined;
-      isNewUser?: boolean | undefined;
-    }) {
-      if (params.user) {
-        params.token.email = params.user.email;
-        // params.token.role = params.user.role;
+    async session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.email = token.email;
+        session.user.name = token.name;
+        session.user.image = token.image; // Add image to the session
       }
-
-      return params.token;
+      return session;
     },
   },
 };
