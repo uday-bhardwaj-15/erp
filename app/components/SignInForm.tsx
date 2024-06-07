@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { signUp } from "../actions/users/signUp";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
+import { Toast } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -14,7 +17,7 @@ const SignInForm = () => {
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState("");
-
+  const { toast } = useToast();
   const handleSubmit = async () => {
     setMessage("Signing in...");
 
@@ -22,13 +25,16 @@ const SignInForm = () => {
       const signInResponse = await signIn("credentials", {
         username,
         password,
-        email: username,
 
         redirect: false,
       });
-      console.log(signInResponse);
+
       if (!signInResponse || signInResponse.ok !== true) {
-        setMessage("Invalid credentials");
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Invalid credential",
+        });
       } else {
         router.refresh();
       }

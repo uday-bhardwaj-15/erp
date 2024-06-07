@@ -69,10 +69,13 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder="Filter university roll number..."
             value={
-              (table.getColumn("addnum")?.getFilterValue() as string) ?? ""
+              (table.getColumn("universityno")?.getFilterValue() as string) ??
+              ""
             }
             onChange={(event) =>
-              table.getColumn("addnum")?.setFilterValue(event.target.value)
+              table
+                .getColumn("universityno")
+                ?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
@@ -81,10 +84,10 @@ export function DataTable<TData, TValue>({
           <Input
             placeholder="Filter Name"
             value={
-              (table.getColumn("studentName")?.getFilterValue() as string) ?? ""
+              (table.getColumn("studentname")?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
-              table.getColumn("studentName")?.setFilterValue(event.target.value)
+              table.getColumn("studentname")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />

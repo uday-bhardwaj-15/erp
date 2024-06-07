@@ -12,10 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PrismaClient } from "@prisma/client";
 
 const AddClass = () => {
-  const prisma = new PrismaClient();
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const handlesubmit = () => {};
@@ -36,10 +34,11 @@ const AddClass = () => {
             <Input
               placeholder="Subject Name"
               className="col-span-3"
+              value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Proffesor</Label>
             <Input placeholder="Proffesor Name" className="col-span-3" />
           </div>
@@ -50,7 +49,7 @@ const AddClass = () => {
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Section</Label>
             <Input placeholder="Section" className="col-span-3" />
-          </div>
+          </div> */}
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handlesubmit}>

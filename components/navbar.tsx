@@ -33,37 +33,42 @@ const Navbar = async () => {
         <div className="flex items-center">
           <div className="block lg:hidden">
             {/* Mobile dropdown */}
-            <Sheet>
-              <SheetTrigger className="text-xl focus:outline-none">
-                {" "}
-                &#9776;
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>
-                    <div className="flex flex-col ">
-                      <Link href="/" className="font-bold text-xl block mt-4">
-                        Dashboard
-                      </Link>
-                      <Link href="/students" className="block mt-2">
-                        Students
-                      </Link>
-                      <Link href="/classes" className="block mt-2">
-                        Classes
-                      </Link>
-                      <Link href="/fees" className="block mt-2">
-                        Fees
-                      </Link>
-                    </div>
-                  </SheetTitle>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
+            {session && session.user?.username && (
+              <Sheet>
+                <SheetTrigger className="text-xl focus:outline-none">
+                  {" "}
+                  &#9776;
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>
+                      <div className="flex flex-col ">
+                        <Link
+                          href="/protected/dashboard"
+                          className="font-bold text-xl block mt-4"
+                        >
+                          Dashboard
+                        </Link>
+                        <Link href="/protected/students" className="block mt-2">
+                          Students
+                        </Link>
+                        <Link href="/protected/classes" className="block mt-2">
+                          Classes
+                        </Link>
+                        <Link href="/protected/fees" className="block mt-2">
+                          Fees
+                        </Link>
+                      </div>
+                    </SheetTitle>
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+            )}
           </div>
           {/* desktop navbar */}
 
           <div className="hidden lg:flex items-center">
-            {session && session.user?.email ? (
+            {session && session.user?.username ? (
               <>
                 <Link href="/protected/dashboard" className="font-bold text-xl">
                   Dashboard
@@ -88,7 +93,7 @@ const Navbar = async () => {
                   Sign out
                 </Link>
                 <p className="ml-4">
-                  <b>Signed in as {session.user?.email}</b>
+                  <b>Signed in as {session.user?.username}</b>
                 </p>
               </>
             ) : (

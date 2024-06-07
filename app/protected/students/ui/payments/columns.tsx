@@ -11,28 +11,32 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
+import DeleteStudent from "@/app/components/DeleteStudent";
+import EditStudent from "@/app/components/EditStudent";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type StudentDetails = {
   id: string;
+  studentname: string;
+  program: string;
+  universityno: string;
   section: string;
-  program: "BCA" | "BBA" | "B-COM" | "BSC";
-  addnum: string;
-  studentName: string;
+  mail: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<StudentDetails>[] = [
   {
     accessorKey: "program",
     header: "Program",
   },
   {
-    accessorKey: "studentName",
+    accessorKey: "studentname",
     header: "Student Name",
   },
   {
-    accessorKey: "addnum",
+    accessorKey: "universityno",
     header: ({ column }) => {
       return (
         <Button
@@ -45,10 +49,11 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
+
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const studentdetails = row.original;
 
       return (
         <DropdownMenu>
@@ -61,13 +66,15 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(studentdetails.id)}
             >
               Copy Student ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View student</DropdownMenuItem>
-            <DropdownMenuItem>View student details</DropdownMenuItem>
+            <EditStudent studentId={studentdetails.id} />
+            <DropdownMenuItem>
+              <DeleteStudent studentId={studentdetails.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -76,5 +83,9 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "section",
     header: "Section",
+  },
+  {
+    accessorKey: "mail",
+    header: "Email",
   },
 ];

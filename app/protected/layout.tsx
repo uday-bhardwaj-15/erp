@@ -10,9 +10,12 @@ interface ProtectedLayoutProps {
 const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
   const session = await getServerSession(authOptions);
 
-  if (!session || !session.user?.email) {
+  if (!session || !session.user?.username) {
     redirect("http://localhost:3000/auth/signIn");
-    return <div>This is protected and you do not have access to it.</div>;
+  }
+
+  if (!session || session.user.role !== "TEACHER") {
+    return <div>You are not a teacher</div>;
   }
 
   return <>{children}</>;

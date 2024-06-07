@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
             username,
           },
         });
-        console.log("uday", user);
+
         if (!user) {
           return null;
         }
@@ -46,7 +46,6 @@ export const authOptions: AuthOptions = {
 
         const isValidPassword = bcrypt.compareSync(password, userPassword);
 
-        console.log({ password });
         if (!isValidPassword) {
           return null;
         }
@@ -55,6 +54,7 @@ export const authOptions: AuthOptions = {
           id: user.id.toString(),
           name: user.name,
           email: user.email,
+          username: user.username,
           image: user.image, // Assuming the user has an image field
           role: user.role || "STUDENT", // Default role if not provided
         };
@@ -98,6 +98,7 @@ export const authOptions: AuthOptions = {
         token.role = user.role;
         token.email = user.email;
         token.name = user.name;
+        token.username = user.username;
         token.image = user.image; // Add image to the token
       }
       return token;
@@ -107,6 +108,7 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id;
         session.user.role = token.role;
         session.user.email = token.email;
+        session.user.username = token.username;
         session.user.name = token.name;
         session.user.image = token.image; // Add image to the session
       }

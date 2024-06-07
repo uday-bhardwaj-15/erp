@@ -7,20 +7,19 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
-  if (!session || !session.user?.email) {
+  if (!session || !session.user?.username) {
     redirect("http://localhost:3000/auth/signIn");
   }
 
   return (
     <div className="p-10">
-      {session && session.user?.email ? (
+      {session && session.user?.username ? (
         <>
           <Link href="/auth/signout">Sign out</Link>
           <p>
-            <b>Signed in as {session.user?.email}</b>
-            <b>hello {session.user?.role}</b>
+            <b>Signed in as {session.user?.username}</b>
+            <b> You are a {session.user?.role}</b>
           </p>
         </>
       ) : (

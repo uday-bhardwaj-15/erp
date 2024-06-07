@@ -9,9 +9,8 @@ export const signUp = async (username: string, passwordhash: string) => {
       username,
     },
   });
-
   if (user) {
-    return "User with that email already exists.";
+    return "User with that credentials already exists.";
   }
 
   const password = bcrypt.hashSync(passwordhash, 10);
@@ -20,7 +19,6 @@ export const signUp = async (username: string, passwordhash: string) => {
     data: {
       username,
       password,
-      email: username,
     },
   });
 
