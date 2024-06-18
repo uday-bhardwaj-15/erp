@@ -1,17 +1,31 @@
-import DeleteStudent from "@/app/components/DeleteStudent";
-import prisma from "@/lib/prisma";
-import { Student } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import StudentCard from "@/components/studentcard";
+import { getServerSession } from "next-auth";
+
 import { NextResponse } from "next/server";
+import FacultyNotice from "./ui/FacultyNotice";
+import Event from "./ui/Event";
+import Teachercard from "./ui/Teachercard";
+import Notification from "./ui/Notification";
+import Upcomingclass from "./ui/UpcomingClass";
 
 const DashboardPage = async (res: NextResponse) => {
-  const students: Student[] = await prisma.student.findMany();
+  const session = await getServerSession(authOptions);
 
   return (
-    <div>
-      This is the dashboard!
-      <h1>Students</h1>
-    </div>
+    <>
+      <Notification />
+      <div className=" my-4">
+        <Teachercard
+          studentId={session.user?.username}
+          role={session.user?.role}
+        />
+      </div>
+      <FacultyNotice />
+      <Upcomingclass />
+      <Event />
+    </>
   );
 };
 

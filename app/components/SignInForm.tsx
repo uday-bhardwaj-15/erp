@@ -13,7 +13,7 @@ const SignInForm = () => {
 
   const { status } = useSession();
 
-  const [username, setUsername] = useState("");
+  const [uNo, setUNo] = useState("");
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState("");
@@ -23,7 +23,7 @@ const SignInForm = () => {
 
     try {
       const signInResponse = await signIn("credentials", {
-        username,
+        uNo,
         password,
 
         redirect: false,
@@ -86,9 +86,9 @@ const SignInForm = () => {
                 <label className="block text-gray-700">Username</label>
                 <input
                   type="text"
-                  value={username}
+                  value={uNo}
                   className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUNo(e.target.value)}
                 />
               </div>
               <div className="mb-4">

@@ -44,17 +44,6 @@ const DeleteStudent = ({ studentId }) => {
     <div>
       <button onClick={deleteButtonClick(studentId)}>Delete Student</button>
 
-      {/* <form action={DeleteStudent} onSubmit={handleDelete}> */}
-      {/* <label>
-          Student ID:
-          <input
-            type="text"
-            value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
-          />
-        </label>
-        // <button type="submit">Delete</button> */}
-      {/* </form> */}
       {message && <p>{message}</p>}
     </div>
   );

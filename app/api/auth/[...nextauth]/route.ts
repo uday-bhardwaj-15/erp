@@ -15,7 +15,7 @@ export const authOptions: AuthOptions = {
       name: "credentials",
 
       credentials: {
-        username: {
+        uNo: {
           label: "Username",
           type: "text",
           placeholder: "yourusername",
@@ -31,10 +31,10 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        const { username, password } = credentials;
+        const { uNo, password } = credentials;
         const user = await prisma.user.findUnique({
           where: {
-            username,
+            uNo,
           },
         });
 
@@ -54,7 +54,7 @@ export const authOptions: AuthOptions = {
           id: user.id.toString(),
           name: user.name,
           email: user.email,
-          username: user.username,
+          username: user.uNo,
           image: user.image, // Assuming the user has an image field
           role: user.role || "STUDENT", // Default role if not provided
         };

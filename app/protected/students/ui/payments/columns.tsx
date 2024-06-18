@@ -1,5 +1,4 @@
 "use client";
-
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,32 +10,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
 import DeleteStudent from "@/app/components/DeleteStudent";
 import EditStudent from "@/app/components/EditStudent";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+// Define the shape of your data
 export type StudentDetails = {
-  id: string;
-  studentname: string;
-  program: string;
-  universityno: string;
+  uNo: string;
+  name: string;
+  programCourse: string;
   section: string;
   mail: string;
 };
 
 export const columns: ColumnDef<StudentDetails>[] = [
   {
-    accessorKey: "program",
+    accessorKey: "programCourse",
     header: "Program",
   },
+
   {
-    accessorKey: "studentname",
+    accessorKey: "name",
     header: "Student Name",
   },
   {
-    accessorKey: "universityno",
+    accessorKey: "uNo",
     header: ({ column }) => {
       return (
         <Button
@@ -49,7 +46,6 @@ export const columns: ColumnDef<StudentDetails>[] = [
       );
     },
   },
-
   {
     id: "actions",
     cell: ({ row }) => {
@@ -66,14 +62,14 @@ export const columns: ColumnDef<StudentDetails>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(studentdetails.id)}
+              onClick={() => navigator.clipboard.writeText(studentdetails.uNo)}
             >
               Copy Student ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <EditStudent studentId={studentdetails.id} />
+            <EditStudent studentId={studentdetails.uNo} />
             <DropdownMenuItem>
-              <DeleteStudent studentId={studentdetails.id} />
+              <DeleteStudent studentId={studentdetails.uNo} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

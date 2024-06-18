@@ -70,22 +70,56 @@ const Navbar = async () => {
           <div className="hidden lg:flex items-center">
             {session && session.user?.username ? (
               <>
-                <Link href="/protected/dashboard" className="font-bold text-xl">
-                  Dashboard
-                </Link>
+                {!isTeacher && (
+                  <>
+                    <Link href="/dashboard" className="font-bold text-xl">
+                      Dashboard
+                    </Link>
+
+                    <Link href="/academic" className="ml-4">
+                      Academic
+                    </Link>
+
+                    <Link href="/fees" className="ml-4">
+                      Fees
+                    </Link>
+
+                    <Link href="/club" className="ml-4">
+                      Club/Committee
+                    </Link>
+
+                    <Link href="/circular" className="ml-4">
+                      Circular
+                    </Link>
+                  </>
+                )}
+
                 {isTeacher && (
                   <>
-                    <Link href="/protected/students" className="ml-4">
-                      Students
+                    <Link
+                      href="/protected/dashboard"
+                      className="font-bold text-xl"
+                    >
+                      Dashboard
                     </Link>
-                    <Link href="/extra" className="ml-4">
-                      Students
+                    <Link href="/protected/attendence" className="ml-4">
+                      Attendence
+                    </Link>
+                    <Link href="/protected/assignment" className="ml-4">
+                      Assignment
                     </Link>
                     <Link href="/protected/classes" className="ml-4">
                       Classes
                     </Link>
+
                     <Link href="/protected/fees" className="ml-4">
                       Fees
+                    </Link>
+                    <Link href="/protected/students" className="ml-4">
+                      Students
+                    </Link>
+                    <Link href="/protected/syllabus" className="ml-4">
+                      Syllabus
                     </Link>
                   </>
                 )}

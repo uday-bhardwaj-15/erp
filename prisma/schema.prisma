@@ -10,10 +10,9 @@ generator client {
 model User {
   id            String          @id @default(cuid())
   name          String?
-  username      String         @unique
+  uNo      String         @unique
   email         String?         
   password      String
-  emailVerified DateTime?
   image         String?
   Session       Session[]
   Account       Account?
@@ -25,15 +24,62 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-model Student{
-  id String @id @default(cuid())
-  studentname String
-  program String
-  universityno String 
-  section String
+
+model Student {
+  uNo String @id  
+  name String
+  programId Int @unique
+  section Section
   mail String
- 
+  classId Int? @unique
+  program   Program @relation(fields: [programId], references: [pId])
+  class Classes[]
+  }
+
+model Program {
+  pId Int @id  @default(autoincrement())
+  course String
+  specialization String
+  students       Student[]
 }
+
+model Classes {
+classId Int @id @default(autoincrement())
+teacherId String
+subjectId String @unique
+
+time String
+day String
+subject  Subject[]
+
+students   Student @relation(fields: [classId], references: [classId])
+
+}
+model Attendence{
+  Id Int @id @default(autoincrement())
+  classId Int
+  uNo String
+Status Status @default(ABSENT)
+
+}
+enum Status {
+  ABSENT
+  PRESENT
+}
+model Subject {
+   subjectId String  @id @default(cuid())
+   subjectName String
+   teacher String
+   teacherId String
+  classes   Classes @relation(fields: [subjectId], references: [subjectId])
+}
+enum Section {
+  A
+  B
+  C
+}
+
+
 enum Role {
   TEACHER
   STUDENT

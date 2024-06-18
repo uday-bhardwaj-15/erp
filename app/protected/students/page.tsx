@@ -1,15 +1,24 @@
 // import Login from "@/components/login";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { columns } from "./ui/payments/columns";
 import { DataTable } from "./ui/payments/data-table";
 import AddStudent from "./ui/AddStudent";
-
-import { PrismaClient, Student } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 const page = async () => {
-  const prisma = new PrismaClient();
+  const students = await prisma.student.findMany({
+    include: {
+      program: true,
+    },
+  });
 
-  const students: Student[] = await prisma.student.findMany();
+  const studentProgram = students.map((student) => ({
+    programCourse: `${student.program.course}-${student.program.specialization}`,
+    uNo: student.uNo,
+    section: student.section,
+    name: student.name,
+    mail: student.mail,
+  }));
 
   return (
     <div>
@@ -17,7 +26,7 @@ const page = async () => {
 
       <div className="container mx-auto py-10">
         <AddStudent />
-        <DataTable columns={columns} data={students} />
+        <DataTable columns={columns} data={studentProgram} />
       </div>
     </div>
   );

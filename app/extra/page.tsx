@@ -1,32 +1,24 @@
-"use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import crypto from "crypto";
+import prisma from "@/lib/prisma";
+import Link from "next/link";
 
-const ToggleForm = () => {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
+export default async function MyComponent() {
+  const students = await prisma.student.findMany({
+    include: {
+      program: true,
+    },
+  });
   return (
-    <div>
-      <button onClick={handleToggle}>
-        {isOpen ? "Close Form" : "Open Form"}
-      </button>
-      {isOpen && (
-        <form>
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-          <br />
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" required />
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-      )}
+    <div className="text-center">
+      {students.map((student) => (
+        <>
+          <li key={student.uNo}>
+            {student.name}
+            <Link href={`/extra/${student.uNo}`}> -------{student.mail}</Link>
+          </li>
+        </>
+      ))}
     </div>
   );
-};
-
-export default ToggleForm;
+}
