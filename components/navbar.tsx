@@ -102,8 +102,8 @@ const Navbar = async () => {
                     >
                       Dashboard
                     </Link>
-                    <Link href="/protected/attendence" className="ml-4">
-                      Attendence
+                    <Link href="/protected/attendance" className="ml-4">
+                      Attendance
                     </Link>
                     <Link href="/protected/assignment" className="ml-4">
                       Assignment

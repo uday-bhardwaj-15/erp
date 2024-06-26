@@ -53,7 +53,7 @@ const AddStudent = () => {
     if (checkUniqueUno(universityNo)) {
       console.log("I logged");
       const res = await fetch("http://localhost:3000/api/students", {
-        method: "POST",
+        method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,

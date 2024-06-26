@@ -8,9 +8,6 @@ const page = () => {
       <h1 className="font-bold   text-4xl text-[#023047] mb-6">Classes</h1>
 
       {/* <p className="text-black font-medium mr-2">Add New Class</p> */}
-      <div>
-        <AddClass />
-      </div>
 
       <div className="flex mt-8 w-full">
         <TableClass />

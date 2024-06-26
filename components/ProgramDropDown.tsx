@@ -48,12 +48,15 @@ const ProgramDropDown = ({ setProgramId, programId }) => {
               ? `${selectedProgram.course}- ${selectedProgram.specialization}`
               : "Select"}
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent key={programId}>
             {programs.map((program) => {
               return (
                 <>
                   {" "}
-                  <DropdownMenuItem onClick={() => handleClick(program)}>
+                  <DropdownMenuItem
+                    key={program.pId}
+                    onClick={() => handleClick(program)}
+                  >
                     {program.course}-{program.specialization}
                   </DropdownMenuItem>
                 </>

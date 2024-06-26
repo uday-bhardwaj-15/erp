@@ -25,7 +25,6 @@ export async function POST(req: Request) {
         section,
         mail,
       },
-      include: { program: true },
     });
 
     await transporter.sendMail({
