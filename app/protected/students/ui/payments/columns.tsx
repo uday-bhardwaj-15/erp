@@ -20,12 +20,17 @@ export type StudentDetails = {
   programCourse: string;
   section: string;
   mail: string;
+  classIds;
 };
 
 export const columns: ColumnDef<StudentDetails>[] = [
   {
     accessorKey: "programCourse",
     header: "Program",
+  },
+  {
+    accessorKey: "classIds",
+    header: "ClassIds",
   },
 
   {

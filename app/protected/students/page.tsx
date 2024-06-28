@@ -11,15 +11,34 @@ const page = async () => {
       program: true,
     },
   });
+  const classes = await prisma.classes.findMany({
+    include: {
+      subject: true,
+    },
+  });
+  const cMap = new Map();
 
-  const studentProgram = students.map((student) => ({
-    programCourse: `${student.program.course}-${student.program.specialization}`,
-    uNo: student.uNo,
-    section: student.section,
-    name: student.name,
-    mail: student.mail,
-  }));
+  classes.forEach((c) => {
+    cMap.set(c.classId, c.subject.subjectName);
+  });
+  console.log({ cMap });
+  const studentProgram = students.map((student) => {
+    // const cValues = student.classIds?.split(",").map((key) => cMap.get(key));
+    const cValues = student.classIds
+      ?.split(",")
+      .map((key) => cMap.get(parseInt(key)));
+    console.log({ cValues });
+    return {
+      programCourse: `${student.program.course}-${student.program.specialization}`,
+      uNo: student.uNo,
+      section: student.section,
+      name: student.name,
+      mail: student.mail,
+      classIds: cValues?.join(", "),
+    };
+  });
 
+  // console.log({ studentProgram });
   return (
     <div>
       <div className="text-4xl font-bold  ml-4 mt-5">Students</div>
