@@ -26,10 +26,12 @@ import { toast } from "@/components/ui/use-toast";
 import { generatePassword } from "@/lib/password";
 import { generateUniversityNo } from "@/lib/universityno";
 import ProgramDropDown from "@/components/ProgramDropDown";
+import AddClasses from "./AddClasses";
 
 const AddStudent = () => {
   const [name, setName] = useState("");
   const [programId, setProgramId] = useState(0);
+  const [classIds, setClassIds] = useState("");
   const [section, setSection] = useState("");
   const [mail, setMail] = useState("");
   const [generatedPass, setGeneratedPass] = useState("");
@@ -62,6 +64,7 @@ const AddStudent = () => {
           section,
           mail,
           password: newPassword,
+          classIds,
         }),
       });
 
@@ -158,7 +161,7 @@ const AddStudent = () => {
                 setProgramId={setProgramId}
                 programId={programId}
               />
-
+              <AddClasses classIds={classIds} setClassIds={setClassIds} />
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Section</Label>
                 <Input

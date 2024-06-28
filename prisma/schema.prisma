@@ -32,6 +32,7 @@ model Student {
 
   section Section
   mail String
+  // cId Int? @unique 
   classIds String?  
   attendences Attendence?
 

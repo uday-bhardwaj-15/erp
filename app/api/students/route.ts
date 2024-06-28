@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, programId, uNo, section, mail, password } = await req.json();
+    const { name, programId, uNo, section, mail, password, classIds } =
+      await req.json();
 
     const studentVal = await prisma.student.findUnique({
       where: {
@@ -24,6 +25,7 @@ export async function POST(req: Request) {
         uNo,
         section,
         mail,
+        classIds,
       },
     });
 
