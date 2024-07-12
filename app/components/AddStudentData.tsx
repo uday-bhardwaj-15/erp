@@ -22,7 +22,7 @@ export default function AddStudentForm() {
         body: JSON.stringify({ studentname, program, universityno, section }),
       }
     );
-    console.log({ res });
+    // console.log({ res });
     if (res.ok) {
       // Redirect or refresh the page
     } else {

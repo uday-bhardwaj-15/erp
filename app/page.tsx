@@ -11,7 +11,7 @@ export default async function Home() {
   if (!session || !session.user?.username) {
     redirect("http://localhost:3000/auth/signIn");
   }
-  console.log(session.user?.username);
+  // console.log(session.user?.username);
   return (
     <div className="p-10">
       {session && session.user?.username ? (

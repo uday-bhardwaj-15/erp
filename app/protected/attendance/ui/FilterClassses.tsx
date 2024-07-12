@@ -1,12 +1,12 @@
 "use client";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import React, { useState } from "react";
+
+import React from "react";
 import AsyncSelect from "react-select/async";
 
-const AddClasses = ({ classIds, setClassIds }) => {
+const FilterClassses = ({ classIds, setClassIds }) => {
   const fetchOptions = async (inputValue) => {
     try {
-      const response = await fetch("http://localhost:3000/api/getclasses", {
+      const response = await fetch("/api/getclasses", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -36,26 +36,23 @@ const AddClasses = ({ classIds, setClassIds }) => {
     fetchOptions(inputValue).then(callback);
   };
 
-  const handleChange = (selectedOptions) => {
-    const selectedIds = selectedOptions
-      ? selectedOptions.map((option) => option.value).join(",")
-      : "";
-    setClassIds(selectedIds);
+  const handleChange = (selectedOption) => {
+    if (selectedOption) {
+      setClassIds(selectedOption.value);
+    } else {
+      setClassIds("");
+    }
   };
 
   return (
-    <div className="grid grid-cols-4 items-center gap-4">
-      <Label className="text-right">Classes</Label>
-      <AsyncSelect
-        isMulti
-        cacheOptions
-        defaultOptions
-        loadOptions={loadOptions}
-        onChange={handleChange}
-        className="form-control w-full  px-3 py-2 rounded-md  col-span-3 text-left text-sm"
-      />
-    </div>
+    <AsyncSelect
+      cacheOptions
+      defaultOptions
+      loadOptions={loadOptions}
+      onChange={handleChange}
+      className="form-control w-full px-3 py-2 rounded-md col-span-3 text-left text-sm"
+    />
   );
 };
 
-export default AddClasses;
+export default FilterClassses;

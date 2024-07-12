@@ -21,7 +21,7 @@ const ProgramDropDown = ({ setProgramId, programId }) => {
         if (response.ok) {
           const data = await response.json();
           setPrograms(data);
-          console.log({ data });
+          // console.log({ data });
         } else {
           console.error("Failed to fetch programs");
         }
@@ -38,34 +38,29 @@ const ProgramDropDown = ({ setProgramId, programId }) => {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <Label className="text-right ">Program</Label>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="form-control  px-3 py-2 rounded-md border col-span-3 text-left text-sm">
-            {" "}
-            {selectedProgram
-              ? `${selectedProgram.course}- ${selectedProgram.specialization}`
-              : "Select"}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent key={programId}>
-            {programs.map((program) => {
-              return (
-                <>
-                  {" "}
-                  <DropdownMenuItem
-                    key={program.pId}
-                    onClick={() => handleClick(program)}
-                  >
-                    {program.course}-{program.specialization}
-                  </DropdownMenuItem>
-                </>
-              );
-            })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger className=" px-3 py-2 rounded-md border col-span-3 text-left text-sm">
+        {" "}
+        {selectedProgram
+          ? `${selectedProgram.course}- ${selectedProgram.specialization}`
+          : "Select a Program"}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent key={programId}>
+        {programs.map((program) => {
+          return (
+            <>
+              {" "}
+              <DropdownMenuItem
+                key={program.pId}
+                onClick={() => handleClick(program)}
+              >
+                {program.course}-{program.specialization}
+              </DropdownMenuItem>
+            </>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

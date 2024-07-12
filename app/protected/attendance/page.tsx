@@ -1,43 +1,55 @@
-// import Login from "@/components/login";
 import React, { useEffect, useState } from "react";
 import prisma from "@/lib/prisma";
-import { DataTable } from "./ui/data-table";
-import { columns } from "./ui/columns";
 
-import AddStatus from "./ui/AddStatus";
-import { Button } from "@/components/ui/button";
+import AttendanceTable from "./ui/AttendanceTable";
 
 const page = async () => {
   const studentsdata = await prisma.student.findMany({
     include: {
       attendences: true,
+      program: true,
+    },
+  });
+  const programs = await prisma.program.findMany({});
+  const classes = await prisma.classes.findMany({
+    include: {
+      subject: true,
     },
   });
 
-  const attendanceData = studentsdata.map((studentval) => ({
-    uNo: studentval.uNo,
-    classId: studentval.attendences?.classId ?? "",
-    status: studentval?.attendences?.Status ?? "",
-    name: studentval.name,
-    Id: studentval.programId ?? "N/A",
+  const cMap = new Map();
 
-    section: studentval.section,
-  }));
+  classes.forEach((c) => {
+    cMap.set(`#${c.classId}#`, c.subject.subjectName);
+  });
+  console.log({ cMap });
+  const attendanceData = studentsdata.map((studentval) => {
+    const cValues = studentval.classIds
+      ?.split(",")
+      .map((key) => cMap.get(key.trim()));
+    console.log({ cValues });
 
-  // const attendanceData = studentsdata.map((studentval) => ({
-  //   uNo: studentval.students.uNo,
-  //   classId: studentval.classId ?? "",
-  //   Id: studentval?.Id ?? "N/A",
-  //   section: studentval.students.section,
-  //   name: studentval.students.name,
-  //   status: studentval?.Status ?? "",
-  // }));
+    return {
+      uNo: studentval.uNo,
+
+      classIds: cValues?.join(", "),
+      status: studentval.attendences.map((stat) => stat.Status).join("  "),
+      date: studentval.attendences.map((stat) => stat.date),
+      name: studentval.name,
+      Id: studentval.attendences?.[0]?.Id ?? "N/A",
+      classId: studentval.attendences?.[0]?.classId ?? "N/A",
+      section: studentval.section,
+      programId: studentval.program.pId,
+      programs: studentval.program.course,
+    };
+  });
 
   return (
     <>
       <div className=" ml-4 mr-4 mt-5">
-        <div className="text-4xl font-bold mb-5 ">Students</div>
-        <DataTable columns={columns} data={attendanceData} />
+        <div className="text-4xl font-bold mb-5 ">Attendance</div>
+
+        <AttendanceTable students={attendanceData} />
       </div>
     </>
   );

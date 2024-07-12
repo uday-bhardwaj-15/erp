@@ -35,7 +35,7 @@ const StudentCard = ({ studentId }) => {
       fetchStudentData();
     }
   }, [studentId]);
-  console.log({ setStudent });
+  // console.log({ setStudent });
 
   return (
     <div className="relative bg-white overflow-hidden mt-16">

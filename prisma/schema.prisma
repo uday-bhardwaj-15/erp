@@ -32,23 +32,22 @@ model Student {
 
   section Section
   mail String
-  // cId Int? @unique 
-  classIds String?  
-  attendences Attendence?
-
-  // classes Classes[]
   
-  // classes   Classes @relation(fields: [cId], references: [classId])
+  classIds String?  
+  attendences Attendence[]
+  
+
   
   program   Program @relation(fields: [programId], references: [pId])
  
 }
 model Attendence{
   Id Int @id @default(autoincrement()) 
-  classId Int?
-  uNo String  @unique
+  classId Int?  
+  uNo String  
   Status Status 
   date String?
+  section Section
   students   Student? @relation(fields: [uNo], references: [uNo])
 }
 
@@ -67,9 +66,7 @@ subjectId String? @unique
 time String
 day String
 subject     Subject?
-// students Student[]
-// students   Student? @relation(fields: [classId], references: [cId])
- 
+
 }
 
 enum Status {

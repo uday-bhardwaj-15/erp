@@ -157,10 +157,13 @@ const AddStudent = () => {
                   required
                 />
               </div>
-              <ProgramDropDown
-                setProgramId={setProgramId}
-                programId={programId}
-              />
+              <div className="grid grid-cols-4 items-center gap-4 px-3 ">
+                <Label className="text-right ">Program</Label>
+                <ProgramDropDown
+                  setProgramId={setProgramId}
+                  programId={programId}
+                />
+              </div>
               <AddClasses classIds={classIds} setClassIds={setClassIds} />
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label className="text-right">Section</Label>

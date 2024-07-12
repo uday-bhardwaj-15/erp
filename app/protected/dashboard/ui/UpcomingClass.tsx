@@ -1,41 +1,61 @@
+import prisma from "@/lib/prisma";
 import React from "react";
 
-const UpcomingclassName = () => {
-  return (
-    <>
-      <p className="text-lg text-center font-bold m-5">Classes Table</p>
-      <table className="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-200 text-gray-800">
-        <tr className="text-left border-b-2 border-gray-300">
-          <th className="px-4 py-3">Day</th>
-          <th className="px-4 py-3">Course</th>
-          <th className="px-4 py-3">Timing</th>
-          <th className="px-4 py-3">Sex</th>
-        </tr>
+const UpcomingClass = async () => {
+  const classes = await prisma.classes.findMany({
+    include: {
+      subject: true,
+    },
+  });
 
-        <tr className="bg-gray-100 border-b border-gray-200">
-          <td className="px-4 py-3">Jill</td>
-          <td className="px-4 py-3">Smith</td>
-          <td className="px-4 py-3">50</td>
-          <td className="px-4 py-3">Male</td>
-        </tr>
-        {/* <!-- each row --> */}
-        <tr className="bg-gray-100 border-b border-gray-200">
-          <td className="px-4 py-3">Jill</td>
-          <td className="px-4 py-3">Smith</td>
-          <td className="px-4 py-3">50</td>
-          <td className="px-4 py-3">Male</td>
-        </tr>
-        {/* <!-- each row --> */}
-        <tr className="bg-gray-100 border-b border-gray-200">
-          <td className="px-4 py-3">Jill</td>
-          <td className="px-4 py-3">Smith</td>
-          <td className="px-4 py-3">50</td>
-          <td className="px-4 py-3">Male</td>
-        </tr>
-        {/* <!-- each row --> */}
-      </table>
-    </>
+  return (
+    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+        Classes
+      </h2>
+      <div className=" rounded-lg">
+        <table className="min-w-full leading-normal">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-5 py-3 border-b-2 border-gray-300 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                Time
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-300 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                Day
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-300 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                Subject
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-300 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                Professor
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map((classdata) => (
+              <tr
+                key={classdata.classId}
+                className="hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105"
+              >
+                <td className="px-5 py-4 border-b border-gray-300 text-sm text-gray-700">
+                  {classdata.time}
+                </td>
+                <td className="px-5 py-4 border-b border-gray-300 text-sm text-gray-700">
+                  {classdata.day}
+                </td>
+                <td className="px-5 py-4 border-b border-gray-300 text-sm text-gray-700">
+                  {classdata.subject.subjectName || "Loading..."}
+                </td>
+                <td className="px-5 py-4 border-b border-gray-300 text-sm text-gray-700">
+                  {classdata.subject.teacher}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
-export default UpcomingclassName;
+export default UpcomingClass;

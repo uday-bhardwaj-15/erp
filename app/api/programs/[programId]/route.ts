@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
   const { programId } = await req.json;
   try {
-    console.log("hello");
+    // console.log("hello");
     const program = await prisma.program.findUnique({
       where: {
         pId: programId,

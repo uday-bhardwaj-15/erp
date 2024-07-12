@@ -56,7 +56,7 @@ export default function EditStudent({ studentId }) {
 
     fetchStudentData();
   }, [studentId]);
-  console.log({ programs });
+  // console.log({ programs });
 
   const handleSubmit = async (studentId) => {
     const res = await fetch(`http://localhost:3000/api/${studentId}`, {

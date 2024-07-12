@@ -8,7 +8,7 @@ interface contextProps {
 }
 export async function DELETE(req: Request, context: contextProps) {
   try {
-    console.log("hello world");
+    // console.log("hello world");
     const { params } = context;
     await prisma.student.delete({
       where: {

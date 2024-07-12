@@ -1,5 +1,4 @@
-// import Login from "@/components/login";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { columns } from "./ui/payments/columns";
 import { DataTable } from "./ui/payments/data-table";
 import AddStudent from "./ui/AddStudent";
@@ -19,14 +18,13 @@ const page = async () => {
   const cMap = new Map();
 
   classes.forEach((c) => {
-    cMap.set(c.classId, c.subject.subjectName);
+    cMap.set(`#${c.classId}#`, c.subject.subjectName);
   });
   console.log({ cMap });
   const studentProgram = students.map((student) => {
-    // const cValues = student.classIds?.split(",").map((key) => cMap.get(key));
     const cValues = student.classIds
       ?.split(",")
-      .map((key) => cMap.get(parseInt(key)));
+      .map((key) => cMap.get(key.trim()));
     console.log({ cValues });
     return {
       programCourse: `${student.program.course}-${student.program.specialization}`,
@@ -38,7 +36,6 @@ const page = async () => {
     };
   });
 
-  // console.log({ studentProgram });
   return (
     <div>
       <div className="text-4xl font-bold  ml-4 mt-5">Students</div>

@@ -7,7 +7,7 @@ const DeleteStudent = ({ studentId }) => {
   const [message, setMessage] = useState("");
   // const [studentId, setStudentId] = useState("");
   const router = useRouter();
-  console.log({ studentId });
+  // console.log({ studentId });
 
   const handleDelete = async (studentId: string) => {
     try {

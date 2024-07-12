@@ -1,55 +1,77 @@
-"use client";
-import React, { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const AddStatus = ({ initialStatus, onStatusChange, uNo }) => {
+import { usePathname, useRouter } from "next/navigation";
+import { useRouter as userRouter } from "next/router";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
+
+const AddStatus = ({ initialStatus, uNo }) => {
   const [status, setStatus] = useState(initialStatus);
-  const router = useRouter();
-  const handleStatusChange = (checked) => {
-    const newStatus = checked ? "PRESENT" : "ABSENT";
-    setStatus(newStatus);
-    onStatusChange(newStatus);
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const res = await fetch(
-      `http://localhost:3000/api/attendance`,
+  const [selectedClassId, setSelectedClassId] = useState(null);
 
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Status: status, uNo }),
-      }
-    );
-    console.log({ res });
-    if (res.ok) {
-      // Redirect or refresh the page\
-      router.refresh();
-    } else {
-      console.error("Failed to create attendance");
-    }
+  const [attendance, setAttendance] = useState([]);
+  function getTodayDate() {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; // YYYY-MM-DD
+  }
+
+  const router = useRouter();
+
+  const handleStatusChange = (value) => {
+    setStatus(value);
+    const attdObj = {
+      uNo,
+      classId: selectedClassId,
+      Status: status,
+      date: getTodayDate(),
+    };
+    console.log({ attdObj });
+    setAttendance((prevAttd) => [...prevAttd, attdObj]);
   };
+  useEffect(() => {
+    const classId = sessionStorage.getItem("selectedClassId");
+    setSelectedClassId(parseInt(classId));
+  }, []);
+  console.log({ attendance });
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const res = await fetch(`http://localhost:3000/api/attendance`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ uNo, Status: status, classId: selectedClassId }),
+  //   });
+  //   console.log({ res });
+  //   if (res.ok) {
+  //     toast({
+  //       variant: "default",
+  //       title: "Success",
+  //       description: "created Attendance",
+  //     });
+  //     router.refresh(); // Redirect or refresh the page
+  //   } else {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Error",
+  //       description: "Attendance Already Marked",
+  //     });
+  //     console.error("Failed to create attendance");
+  //   }
+  // };
 
   return (
     <div className="flex items-center space-x-2">
-      {initialStatus ? (
-        <span>{status}</span>
-      ) : (
-        <form onSubmit={handleSubmit} className="flex items-center space-x-2">
-          <Checkbox
-            checked={status === "PRESENT"}
-            onCheckedChange={(checked) => handleStatusChange(checked)}
-          />
-          <span>{status}</span>
-          <button
-            type="submit"
-            className=" px-2  py-1 bg-blue-500 text-white rounded"
-          >
-            Save
-          </button>
-        </form>
-      )}
+      <RadioGroup value={status} onValueChange={handleStatusChange}>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="PRESENT" id="r1" />
+          <Label htmlFor="r1">PRESENT</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="ABSENT" id="r2" />
+          <Label htmlFor="r2">ABSENT</Label>
+        </div>
+      </RadioGroup>
     </div>
   );
 };
