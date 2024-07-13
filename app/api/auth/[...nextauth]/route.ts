@@ -1,13 +1,9 @@
-import { Account, Profile, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT } from "next-auth/jwt";
-import NextAuth, { getServerSession } from "next-auth/next";
+import NextAuth from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { AuthOptions } from "next-auth";
-import { Role } from "@prisma/client";
-import Email from "next-auth/providers/email";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -56,7 +52,7 @@ export const authOptions: AuthOptions = {
           email: user.email,
           username: user.uNo,
           image: user.image, // Assuming the user has an image field
-          role: user.role || "STUDENT", // Default role if not provided
+          role: user.role || "STUDENT", // Default role if not providedS
         };
       },
     }),
