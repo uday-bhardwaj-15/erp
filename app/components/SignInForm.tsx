@@ -50,9 +50,7 @@ const SignInForm = () => {
       router.push("/");
       router.refresh();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [router, status]);
 
   return (
     <>

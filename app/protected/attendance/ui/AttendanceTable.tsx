@@ -30,8 +30,6 @@ import FilterClassses from "./FilterClassses";
 
 const AttendanceTable = ({ students }) => {
   const [selectedClassId, setSelectedClassId] = useState(null);
-  const [selectedClassValue, setSelectedClassValue] = useState(null);
-  const [selectedProgramValue, setSelectedProgramValue] = useState(null);
   const [classIds, setClassIds] = useState("");
   const [attendance, setAttendance] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -44,11 +42,6 @@ const AttendanceTable = ({ students }) => {
     return today.toISOString().split("T")[0]; // YYYY-MM-DD
   }
 
-  const handleClassSelectChange = (valueWithId: string) => {
-    const [value, id] = valueWithId.split("|");
-    setSelectedClassValue(value);
-    setSelectedClassId(id);
-  };
   // console.log({ selectedClassId, selectedClassValue });
   console.log({ classIds });
   const handleSectionChange = (value) => {
@@ -69,7 +62,6 @@ const AttendanceTable = ({ students }) => {
       }),
     });
 
-    console.log({ selectedClassId });
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
@@ -119,7 +111,7 @@ const AttendanceTable = ({ students }) => {
   const handleStatusChange = (value, uNo) => {
     const attdObj = {
       uNo,
-      classId: selectedClassId,
+      classId: classIds,
       Status: value,
       date: getTodayDate(),
       section: selectedSection,
@@ -153,29 +145,6 @@ const AttendanceTable = ({ students }) => {
         <div className="flex h-10 mb-3  items-center justify-between rounded-md  py-2 text-sm ">
           <FilterClassses classIds={classIds} setClassIds={setClassIds} />
         </div>
-
-        {/* <Select onValueChange={handleClassSelectChange}>
-          <SelectTrigger className="w-[180px] mr-4">
-            <SelectValue placeholder="Select a class" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Classes</SelectLabel>
-
-              <SelectItem value="Maths|1"></SelectItem>
-
-              <SelectItem value="Data Structure|2">Data Structure</SelectItem>
-              <SelectItem value="Digital Electronics|3">
-                Digital Electronics
-              </SelectItem>
-              <SelectItem value="Java|4">Java</SelectItem>
-              <SelectItem value="Web Technology|5">Web Technology</SelectItem>
-              <SelectItem value="Communication Skills|6">
-                Communication Skills
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select> */}
 
         <Button
           onClick={handleAttendanceData}
