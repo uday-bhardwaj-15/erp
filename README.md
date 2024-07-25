@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ERP Project: Student Management System with NextAuth and Prisma
+
+This is a comprehensive ERP project that allows Teachers to manage students, track attendance, and send automated emails with login credentials. The project utilizes NextAuth for authentication and authorization, and Prisma as the ORM (Object-Relational Mapping) tool to interact with a MySQL database.
+
+## Features
+
+- Student Management
+- Add, edit, and delete students
+- View student profiles with details such as name, email, and
+- contact information
+
+## Attendance Tracking
+
+- Add multiple attendance records for each student
+- View attendance history for each student
+- Automated Email Sending
+- Send automated emails to students with their login credentials (username and password)
+
+## Authentication and Authorization
+
+- Utilizes NextAuth for secure authentication and authorization
+- Supports login, logout, and password reset functionality
+- Protected routes: users cannot access certain pages without logging in
+- Role-based access control: teachers and students have different levels of access and cannot access each other's pages by URL
+
+## Role-Based Access Control
+
+- Teachers can view and manage attendance records for students
+- Students can view their own attendance records and profile information
+
+## Technologies Used
+
+- Next.js (React framework)
+- NextAuth (Authentication and Authorization library)
+- Prisma (ORM tool)
+- MySQL (Relational database management system)
+- Node.js (Server-side runtime environment)
 
 ## Getting Started
 
-First, run the development server:
+- Node.js installed on your machine
+- MySQL installed and running on your machine
+- Prisma CLI installed globally: npm install -g @prisma/cli
+
+## Installation
+
+Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/uday-bhardwaj-15/erp
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install or yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Create a MySQL database and update the `prisma/schema`.prisma file with your database credentials
 
-## Learn More
+```bash
+Run npx prisma migrate dev to create the database schema
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the development server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev or yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Environment Variables
 
-## Deploy on Vercel
+To run this project, you will need to add the following environment variables to your .env file
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`DATABASE_URL: your MySQL connection string`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`NEXTAUTH_URL: your NextAuth URL`
+
+`EMAIL_USERNAME: your email username`
+
+`EMAIL_PASSWORD: your email password`
+
+`Running the Application`
+
+`Start the development server: npm run dev or yarn dev`
+
+`Open your web browser and navigate to http://localhost:3000`
+
+## Prisma Schema
+
+The Prisma schema is defined in `prisma/schema.prisma`. This file defines the database schema, including the Student, Teacher, and Attendance models.
+
+## NextAuth Configuration
+
+The NextAuth configuration is defined in `nextauth.config.js`. This file defines the authentication and authorization settings, including the login, logout.
+
+## Protected Routes
+
+The following routes are protected and require authentication:
+
+- /teacher: accessible only to teachers
+- /student: accessible only to students
+
+## Role-Based Access Control
+
+- Teachers can view and manage attendance records for students
+- Students can view their own attendance records and profile information
+
+## Role-Based Access Control
+
+- Teachers can view and manage attendance records for students
+- Students can view their own attendance records and profile information
+
+## Contributing
+
+Contributions are welcome!
+
+If you'd like to contribute to this project, please fork the repository and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgements
+
+- Next.js and NextAuth teams for creating amazing libraries
+- Prisma team for creating a powerful ORM tool
+- MySQL team for creating a powerful relational database management system

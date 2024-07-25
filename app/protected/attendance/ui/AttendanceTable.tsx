@@ -143,7 +143,7 @@ const AttendanceTable = ({ students }) => {
           </SelectContent>
         </Select>
         <div className="flex h-10 mb-3  items-center justify-between rounded-md  py-2 text-sm ">
-          <FilterClassses classIds={classIds} setClassIds={setClassIds} />
+          <FilterClassses setClassIds={setClassIds} />
         </div>
 
         <Button

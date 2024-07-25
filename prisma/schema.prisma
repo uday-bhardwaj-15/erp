@@ -43,7 +43,7 @@ model Student {
 }
 model Attendence{
   Id Int @id @default(autoincrement()) 
-  classId Int?  
+  classId String?  
   uNo String  
   Status Status 
   date String?

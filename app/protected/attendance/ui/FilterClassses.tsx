@@ -3,7 +3,7 @@
 import React from "react";
 import AsyncSelect from "react-select/async";
 
-const FilterClassses = ({ classIds, setClassIds }) => {
+const FilterClassses = ({ setClassIds }) => {
   const fetchOptions = async (inputValue) => {
     try {
       const response = await fetch("/api/getclasses", {

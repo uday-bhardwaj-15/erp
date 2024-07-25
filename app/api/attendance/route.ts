@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         where: {
           uNo,
           date,
-          classId: parseInt(classId),
+          classId,
         },
       });
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
     const attendanceData = attendance.map((item) => ({
       uNo: item.uNo,
-      classId: parseInt(item.classId),
+      classId: item.classId,
       Status: item.Status,
       date: item.date,
       section: item.section,
