@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const Event = () => {
@@ -10,9 +11,12 @@ const Event = () => {
       <section className="max-w-7xl  mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
           <a href="#">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               className="h-80 w-72 object-cover rounded-t-xl"
+              alt="image"
+              width={288}
+              height={320}
             />
             <div className="px-4 py-3 w-72">
               <span className="text-gray-400 mr-3 uppercase text-xs">Zion</span>
@@ -50,10 +54,12 @@ const Event = () => {
         </div>
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
           <a href="#">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Product"
               className="h-80 w-72 object-cover rounded-t-xl"
+              width={288}
+              height={320}
             />
             <div className="px-4 py-3 w-72">
               <span className="text-gray-400 mr-3 uppercase text-xs">COER</span>
@@ -91,10 +97,12 @@ const Event = () => {
         </div>
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
           <a href="#">
-            <img
+            <Image
               src="https://plus.unsplash.com/premium_photo-1670963025208-57d791213689?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Product"
               className="h-80 w-72 object-cover rounded-t-xl"
+              width={288}
+              height={320}
             />
             <div className="px-4 py-3 w-72">
               <span className="text-gray-400 mr-3 uppercase text-xs">COER</span>

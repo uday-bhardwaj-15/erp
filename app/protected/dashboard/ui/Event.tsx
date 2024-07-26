@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 const Event = () => {
   return (
     <>
@@ -13,10 +13,12 @@ const Event = () => {
           </h2>
           <ul className="mt-16 grid grid-cols-1 gap-6 text-center text-slate-700 md:grid-cols-3">
             <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-              <img
+              <Image
                 src="https://www.svgrepo.com/show/530438/ddos-protection.svg"
                 alt=""
                 className="mx-auto h-10 w-10"
+                width={40}
+                height={40}
               />
               <h3 className="my-3 font-display font-medium">
                 Powered by I.I.T
@@ -28,10 +30,12 @@ const Event = () => {
               </p>
             </li>
             <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-              <img
+              <Image
                 src="https://www.svgrepo.com/show/530442/port-detection.svg"
                 alt=""
                 className="mx-auto h-10 w-10"
+                width={40}
+                height={40}
               />
               <h3 className="my-3 font-display font-medium">
                 Laser Sharp Focus
@@ -42,10 +46,12 @@ const Event = () => {
               </p>
             </li>
             <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
-              <img
+              <Image
                 src="https://www.svgrepo.com/show/530444/availability.svg"
                 alt=""
                 className="mx-auto h-10 w-10"
+                width={40}
+                height={40}
               />
               <h3 className="my-3 font-display font-medium">
                 Start Coding Program
